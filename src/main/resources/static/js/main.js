@@ -74,9 +74,7 @@ function onMessageReceived(payload) {
 
     var messageElement = document.createElement('li');
 
-    messageElement.contentEditable = true;
-
-if(message.type === 'JOIN') {
+    if(message.type === 'JOIN') {
         messageElement.classList.add('event-message');
         message.content = message.sender + ' joined!';
     } else if (message.type === 'LEAVE') {
@@ -91,15 +89,13 @@ if(message.type === 'JOIN') {
         avatarElement.style['background-color'] = getAvatarColor(message.sender);
 
         messageElement.appendChild(avatarElement);
+
         var usernameElement = document.createElement('span');
-
         usernameElement.contentEditable = true;
-        //usernameElement.setAttribute('contenteditable', 'true');
 
-    var usernameText = document.createTextNode(message.sender);
-        usernameElement.appendChild(usernameText.contentEditable = true);
-        messageElement.appendChild(usernameElement.contentEditable = true);
-
+        var usernameText = document.createTextNode(message.sender);
+        usernameElement.appendChild(usernameText);
+        messageElement.appendChild(usernameElement);
     }
 
     var textElement = document.createElement('p');
@@ -123,17 +119,36 @@ function getAvatarColor(messageSender) {
     return colors[index];
 }
 
+// function saveEdits() {
+//
+// //get the editable element
+//     var editElem = document.getElementById("username");
+//
+// //get the edited element content
+//     var userVersion = editElem.innerHTML;
+//
+// //save the content to local storage
+//     localStorage.userEdits = userVersion;
+//
+// //write a confirmation to the user
+//     document.getElementById("username").innerHTML="Edits saved!";
+//
+// }
+function saveEdits() {
 
+//get the editable element
+    var editElem = document.getElementById("edit");
 
+//get the edited element content
+    var userVersion = editElem.innerHTML;
 
-edit_button.addEventListener("click", function() {
-    usernameElement.contentEditable = true;
-    usernameElement.style.backgroundColor = "#dddbdb";
-} );
-end_button.addEventListener("click", function() {
-    usernameElement.contentEditable = false;
-    usernameElement.style.backgroundColor = "#ffe44d";
-} )
+//save the content to local storage
+    localStorage.userEdits = userVersion;
+
+//write a confirmation to the user
+    document.getElementById("update").innerHTML="Edits saved!";
+
+}
 
 usernameForm.addEventListener('submit', connect, true)
 messageForm.addEventListener('submit', send, true)
