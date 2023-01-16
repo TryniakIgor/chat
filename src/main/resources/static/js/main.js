@@ -19,7 +19,7 @@ var colors = [
 function connect(event) {
     username = document.querySelector('#name').value.trim();
 
-    if(username) {
+    if (username) {
         usernamePage.classList.add('hidden');
         chatPage.classList.remove('hidden');
 
@@ -55,7 +55,7 @@ function onError(error) {
 function send(event) {
     var messageContent = messageInput.value.trim();
 
-    if(messageContent && stompClient) {
+    if (messageContent && stompClient) {
         var chatMessage = {
             sender: username,
             content: messageInput.value,
@@ -74,7 +74,7 @@ function onMessageReceived(payload) {
 
     var messageElement = document.createElement('li');
 
-    if(message.type === 'JOIN') {
+    if (message.type === 'JOIN') {
         messageElement.classList.add('event-message');
         message.content = message.sender + ' joined!';
     } else if (message.type === 'LEAVE') {
@@ -92,6 +92,10 @@ function onMessageReceived(payload) {
 
         var usernameElement = document.createElement('span');
         usernameElement.contentEditable = true;
+
+        usernameElement.addEventListener('input', function () {
+            username = this.innerHTML;
+        });
 
         var usernameText = document.createTextNode(message.sender);
         usernameElement.appendChild(usernameText);
@@ -119,21 +123,7 @@ function getAvatarColor(messageSender) {
     return colors[index];
 }
 
-// function saveEdits() {
-//
-// //get the editable element
-//     var editElem = document.getElementById("username");
-//
-// //get the edited element content
-//     var userVersion = editElem.innerHTML;
-//
-// //save the content to local storage
-//     localStorage.userEdits = userVersion;
-//
-// //write a confirmation to the user
-//     document.getElementById("username").innerHTML="Edits saved!";
-//
-// }
+
 function saveEdits() {
 
 //get the editable element
@@ -146,7 +136,7 @@ function saveEdits() {
     localStorage.userEdits = userVersion;
 
 //write a confirmation to the user
-    document.getElementById("update").innerHTML="Edits saved!";
+    document.getElementById("update").innerHTML = "Edits saved!";
 
 }
 
